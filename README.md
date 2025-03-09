@@ -2,15 +2,15 @@
 ESPHome-powered portable air quality station with HomeAssistant integration
 
 <p align="center">
-  <img src="./img/image-1.png" width="200">
-  <img src="./img/image-2.png" width="200">
-  <img src="./img/image-3.png" width="200">
+  <img src="./img/image-1.jpg" width="200">
+  <img src="./img/image-2.jpg" width="200">
+  <img src="./img/image-3.jpg" width="200">
 </p>
 
 <p align="center">
-  <img src="./img/image-4.png" width="200">
-  <img src="./img/image-5.png" width="200">
-  <img src="./img/image-6.png" width="200">
+  <img src="./img/image-4.jpg" width="200">
+  <img src="./img/image-5.jpg" width="200">
+  <img src="./img/image-6.jpg" width="200">
 </p>
 
 ## HW parts
