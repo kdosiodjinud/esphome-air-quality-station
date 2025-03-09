@@ -1,7 +1,7 @@
 # esphome-air-quality-station
 ESPHome-powered portable air quality station with HomeAssistant integration
 
-![Air Quality Station](image-1.jpg)
+<img src="./image-1.jpg" style="width: 200px;">
 
 ## HW parts
 
@@ -36,4 +36,12 @@ Battery reduction: [https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter
 
 ### 3D printed STL files:
 
-![Air Quality Station - STL Files](image-stl.png)
+<img src="./stl/image-stl.png" style="width: 200px;">
+
+* body: [download](./stl/co2-body.stl)
+* desk: [download](./stl/co2-desk.stl)
+* header: [download](./stl/co2-header.stl)
+* footer: [download](./stl/co2-footer.stl)
+
+
+
