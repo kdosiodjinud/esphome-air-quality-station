@@ -53,15 +53,17 @@ Battery reduction: [https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter
 * header: [download](./stl/co2-header.stl)
 * footer: [download](./stl/co2-footer.stl)
 
+### Post-production for 3D printed parts
+
+* color in spray: [https://www.hornbach.cz/c/barvy-tapety-a-oblozeni-sten/barvy-laky/barvy/barvy-ve-spreji/specialni-efekty-ve-spreji/S12050/](https://www.hornbach.cz/c/barvy-tapety-a-oblozeni-sten/barvy-laky/barvy/barvy-ve-spreji/specialni-efekty-ve-spreji/S12050/)
+
 ### ESPHome config:
 
-[download](./esp-config.yaml)
+[esp-config.yaml](./esp-config.yaml)
 
 ## Interesting
 
 * I couldn't use deep sleep because the VOC sensor needs to collect values continuously
 * I used a non-standard I2C - because I needed a perpetual I2C power supply
 * I needed to modify the library for ePaper (you can see the link in the code)  
-
-
-
+* device battery life is about 4 days (without VOC / NOX + deepsleep it would be more than a month)
