@@ -73,3 +73,4 @@ Battery reduction: [https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter
 * device battery life is about 4 days (without VOC / NOX + deepsleep it would be more than a month)
 * the display shows the pressure converted to a specific altitude
 * values outside the optimum range are highlighted in black on the display
+* if no wifi is available, it stops trying to use it - after reboot (usb-c power connection) it tries to find wifi again
