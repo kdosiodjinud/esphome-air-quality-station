@@ -1,7 +1,7 @@
 # esphome-air-quality-station
 ESPHome-powered portable air quality station with HomeAssistant integration
 
-![Air Quality Station](image.jpg)
+![Air Quality Station](image-1.jpg)
 
 ## HW parts
 
