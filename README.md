@@ -66,5 +66,8 @@ Battery reduction: [https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter
 
 * I couldn't use deep sleep because the VOC sensor needs to collect values continuously
 * I used a non-standard I2C - because I needed a perpetual I2C power supply
-* I needed to modify the library for ePaper (you can see the link in the code)  
+* I needed to modify the library for ePaper (you can see the link in the code)
+* there is an extra sensor for temperature and humidity, because the CO2 sensor generates heat and does not measure properly
 * device battery life is about 4 days (without VOC / NOX + deepsleep it would be more than a month)
+* the display shows the pressure converted to a specific altitude
+* values outside the optimum range are highlighted in black on the display
