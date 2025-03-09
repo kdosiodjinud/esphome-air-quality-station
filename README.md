@@ -20,6 +20,7 @@ ESPHome-powered portable air quality station with HomeAssistant integration
 Czech shop (with easy connection by uSup) [https://www.laskakit.cz/laskakit-scd41-senzor-co2--teploty-a-vlhkosti-vzduchu/](https://www.laskakit.cz/laskakit-scd41-senzor-co2--teploty-a-vlhkosti-vzduchu/)
 
 Better price but long delivery: [https://www.aliexpress.com/item/1005006619366785.html](https://www.aliexpress.com/item/1005006619366785.html)
+
 _* from aliexpress select correct one_
 
 ### VOX / nOX
