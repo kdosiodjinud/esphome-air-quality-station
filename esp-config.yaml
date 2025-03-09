@@ -1,0 +1,322 @@
+esphome:
+  name: air-quality
+  comment: "Měření kvality vzduchu - přenosné"
+  on_boot:
+    - priority: 600
+      then:
+        - output.turn_on: board_power  
+
+esp32:
+  board: esp-wrover-kit
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/kdosiodjinud/esphome/
+      ref: main
+    components: [ waveshare_epaper ]
+
+logger:
+
+api:
+  encryption:
+    key: "my-key"
+
+ota:
+  platform: esphome
+  password: "my-password"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  id: my_wifi
+
+i2c:
+  sda: 32
+  scl: 33
+  id: bus_a
+  frequency: 200khz
+
+output:
+  - platform: gpio
+    pin: 2
+    id: board_power
+
+font:
+  - file: 'FiraSans-Regular.ttf'
+    id: font1
+    size: 12
+
+spi:
+  clk_pin: 18
+  mosi_pin: 23
+
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: Europe/Prague
+    servers:
+     - 0.pool.ntp.org
+     - 1.pool.ntp.org
+     - 2.pool.ntp.org
+
+interval:
+  - interval: 5min
+    then:
+      - if:
+          condition:
+            - lambda: return !id(wifi_failed);
+          then:
+            - wifi.configure:
+                ssid: !secret wifi_ssid
+                password: !secret wifi_password
+                timeout: 20s
+                on_error:
+                  - lambda: id(wifi_failed) = true;
+      - component.update: platform_scd4x
+      - component.update: platform_sgp4x
+      - component.update: battery_voltage
+      - component.update: battery_percentage
+      - component.update: platform_bme280_i2c
+      - component.update: platform_bme280_i2c_pressure_normalized
+      - delay: 5s
+      - lambda: WiFi.mode(WIFI_OFF);
+      - output.turn_on: board_power 
+      - component.update: eink_display
+      - delay: 3s
+      - output.turn_off: board_power
+
+display:
+  - platform: waveshare_epaper
+    id: eink_display
+    cs_pin: 5
+    dc_pin: 17
+    reset_pin: 16
+    model: gdey029t94
+    rotation: 180
+    update_interval: never
+    lambda: |-
+      id(eink_display).fill(COLOR_OFF); 
+
+      if (id(platform_scd4x_co2).state > 1000) {
+        id(eink_display).filled_rectangle(0, 0, 128, 50, COLOR_ON);
+        id(eink_display).printf(5, 10, id(font1), COLOR_OFF, "CO2");
+        id(eink_display).printf(118, 10, id(font1), COLOR_OFF, TextAlign::TOP_RIGHT, "%s", id(air_quality_co2).state.c_str());
+        id(eink_display).printf(118, 25, id(font1), COLOR_OFF, TextAlign::TOP_RIGHT, "%.0f ppm", id(platform_scd4x_co2).state);
+      } else {
+        id(eink_display).printf(5, 10, id(font1), COLOR_ON, "CO2");
+        id(eink_display).printf(118, 10, id(font1), COLOR_ON, TextAlign::TOP_RIGHT, "%s", id(air_quality_co2).state.c_str());
+        id(eink_display).printf(118, 25, id(font1), COLOR_ON, TextAlign::TOP_RIGHT, "%.0f ppm", id(platform_scd4x_co2).state);
+      }
+      id(eink_display).line(0, 50, 128, 50);
+
+      if (id(platform_sgp4x_voc).state > 100) {
+        id(eink_display).filled_rectangle(0, 50, 128, 50, COLOR_ON);
+        id(eink_display).printf(5, 60, id(font1), COLOR_OFF, "VOC");
+        id(eink_display).printf(118, 60, id(font1), COLOR_OFF, TextAlign::TOP_RIGHT, "%s", id(air_quality_voc).state.c_str());
+        id(eink_display).printf(118, 75, id(font1), COLOR_OFF, TextAlign::TOP_RIGHT, "%.0f", id(platform_sgp4x_voc).state);
+      } else {
+        id(eink_display).printf(5, 60, id(font1), COLOR_ON, "VOC");
+        id(eink_display).printf(118, 60, id(font1), COLOR_ON, TextAlign::TOP_RIGHT, "%s", id(air_quality_voc).state.c_str());
+        id(eink_display).printf(118, 75, id(font1), COLOR_ON, TextAlign::TOP_RIGHT, "%.0f", id(platform_sgp4x_voc).state);
+      }
+      id(eink_display).line(0, 100, 128, 100);
+
+      if (id(platform_sgp4x_nox).state > 100) {
+        id(eink_display).filled_rectangle(0, 100, 128, 50, COLOR_ON);
+        id(eink_display).printf(5, 110, id(font1), COLOR_OFF, "NOx");
+        id(eink_display).printf(118, 110, id(font1), COLOR_OFF, TextAlign::TOP_RIGHT, "%s", id(air_quality_nox).state.c_str());
+        id(eink_display).printf(118, 125, id(font1), COLOR_OFF, TextAlign::TOP_RIGHT, "%.0f", id(platform_sgp4x_nox).state);
+      } else {
+        id(eink_display).printf(5, 110, id(font1), COLOR_ON, "NOx");
+        id(eink_display).printf(118, 110, id(font1), COLOR_ON, TextAlign::TOP_RIGHT, "%s", id(air_quality_nox).state.c_str());
+        id(eink_display).printf(118, 125, id(font1), COLOR_ON, TextAlign::TOP_RIGHT, "%.0f", id(platform_sgp4x_nox).state);
+      }
+      id(eink_display).line(0, 150, 128, 150);
+
+      if (id(platform_bme280_i2c_temperature).state > 26) {
+        id(eink_display).filled_rectangle(0, 150, 128, 35, COLOR_ON);
+        id(eink_display).printf(5, 160, id(font1), COLOR_OFF, "Teplota");
+        id(eink_display).printf(118, 160, id(font1), COLOR_OFF, TextAlign::TOP_RIGHT, "%.1f C", id(platform_bme280_i2c_temperature).state);
+      } else {
+        id(eink_display).printf(5, 160, id(font1), COLOR_ON, "Teplota");
+        id(eink_display).printf(118, 160, id(font1), COLOR_ON, TextAlign::TOP_RIGHT, "%.1f C", id(platform_bme280_i2c_temperature).state);
+      }
+      id(eink_display).line(0, 185, 128, 185);
+
+      if (id(platform_bme280_i2c_humidity).state < 35 || id(platform_bme280_i2c_humidity).state > 60) {
+        id(eink_display).filled_rectangle(0, 185, 128, 40, COLOR_ON);
+        id(eink_display).printf(5, 195, id(font1), COLOR_OFF, "Vlhkost");
+        id(eink_display).printf(118, 195, id(font1), COLOR_OFF, TextAlign::TOP_RIGHT, "%.0f %%", id(platform_bme280_i2c_humidity).state);
+      } else {
+        id(eink_display).printf(5, 195, id(font1), COLOR_ON, "Vlhkost");
+        id(eink_display).printf(118, 195, id(font1), COLOR_ON, TextAlign::TOP_RIGHT, "%.0f %%", id(platform_bme280_i2c_humidity).state);
+      }
+      id(eink_display).line(0, 225, 128, 225);
+
+      id(eink_display).printf(5, 235, id(font1), COLOR_ON, "Tlak");
+      id(eink_display).printf(118, 235, id(font1), COLOR_ON, TextAlign::TOP_RIGHT, "%.1f hPa", id(platform_bme280_i2c_pressure_normalized).state);
+      id(eink_display).line(0, 255, 128, 255);
+
+      id(eink_display).printf(
+          64, 262, id(font1), TextAlign::TOP_CENTER, 
+          "%s", 
+          id(sntp_time).now().strftime("%Y-%m-%d %H:%M").c_str()
+      );
+
+      id(eink_display).printf(
+          64, 278, id(font1), TextAlign::TOP_CENTER, 
+          "%.1f%%%s", 
+          id(battery_percentage).state, 
+          id(wifi_failed) ? " | !W" : ""
+      );
+
+
+globals:
+  - id: wifi_failed
+    type: bool
+    restore_value: no
+    initial_value: "false"
+
+
+sensor:
+  - platform: scd4x
+    update_interval: never
+    id: platform_scd4x
+    measurement_mode: single_shot
+    co2:
+      name: "CO2"
+      id: platform_scd4x_co2
+      state_class: measurement
+      device_class: carbon_dioxide
+      unit_of_measurement: "ppm"
+      icon: "mdi:molecule-co2"
+      on_value:
+        then:
+          - text_sensor.template.publish:
+              id: air_quality_co2
+              state: !lambda |-
+                if (id(platform_scd4x_co2).state < 601) return "Vyborne";
+                if (id(platform_scd4x_co2).state < 1001) return "Dobre";
+                if (id(platform_scd4x_co2).state < 1401) return "Zvysene";
+                if (id(platform_scd4x_co2).state < 2001) return "Vysoke";
+                return "Nebezpecne";
+
+  - platform: bme280_i2c
+    update_interval: never
+    id: platform_bme280_i2c
+    temperature:
+      name: "Teplota"
+      id: platform_bme280_i2c_temperature
+      oversampling: 2x
+    pressure:
+      name: "Tlak"
+      id: platform_bme280_i2c_pressure
+      oversampling: 2x
+      on_value:
+        then:
+          - sensor.template.publish:
+              id: platform_bme280_i2c_pressure_normalized
+              state: !lambda |-
+                return id(platform_bme280_i2c_pressure).state / pow(1 - ((0.0065 * 392) / (id(platform_bme280_i2c_temperature).state + (0.0065 * 392) + 273.15)), 5.257);
+    humidity:
+      name: "Vlhkost"
+      id: platform_bme280_i2c_humidity
+      oversampling: 2x
+
+  - platform: sgp4x
+    update_interval: never
+    id: platform_sgp4x
+    compensation:
+      humidity_source: platform_bme280_i2c_humidity
+      temperature_source: platform_bme280_i2c_temperature
+    voc:
+      name: "VOC Index"
+      id: platform_sgp4x_voc
+      state_class: measurement
+      device_class: volatile_organic_compounds
+      unit_of_measurement: "Index"
+      icon: "mdi:chemical-weapon"
+      on_value:
+        then:
+          - text_sensor.template.publish:
+              id: air_quality_voc
+              state: !lambda |-
+                if (id(platform_sgp4x_voc).state < 51) return "Vyborne";
+                if (id(platform_sgp4x_voc).state < 101) return "Dobre";
+                if (id(platform_sgp4x_voc).state < 201) return "Zvysene";
+                if (id(platform_sgp4x_voc).state < 301) return "Vysoke";
+                return "Nebezpecne";
+    nox:
+      name: "NOx Index"
+      id: platform_sgp4x_nox
+      state_class: measurement
+      device_class: nitrogen_dioxide
+      unit_of_measurement: "Index"
+      icon: "mdi:smog"
+      on_value:
+        then:
+          - text_sensor.template.publish:
+              id: air_quality_nox
+              state: !lambda |-
+                if (id(platform_sgp4x_nox).state < 51) return "Vyborne";
+                if (id(platform_sgp4x_nox).state < 101) return "Dobre";
+                if (id(platform_sgp4x_nox).state < 201) return "Zvysene";
+                if (id(platform_sgp4x_nox).state < 301) return "Vysoke";
+                return "Nebezpecne";
+
+  - platform: template
+    name: "Tlak (normalizovaný 392m.n.m.)"
+    id: platform_bme280_i2c_pressure_normalized
+    state_class: measurement
+    unit_of_measurement: hPa
+    device_class: pressure
+
+    update_interval: never
+
+  - platform: adc
+    pin: GPIO34
+    name: "Baterie - napětí"
+    id: battery_voltage
+    state_class: measurement
+    device_class: voltage
+    unit_of_measurement: "V"
+    icon: "mdi:battery"
+    update_interval: never
+    attenuation: 12db
+    filters:
+      - multiply: 2.0
+      - sliding_window_moving_average: 
+          window_size: 5
+          send_every: 1
+
+  - platform: template
+    name: "Baterie - procenta"
+    id: battery_percentage
+    state_class: measurement
+    device_class: battery
+    unit_of_measurement: "%"
+    icon: "mdi:battery-high"
+    lambda: |-
+      if (id(battery_voltage).state > 4.6) return 100.0;
+      if (id(battery_voltage).state < 3.6) return 0.0;
+      return (id(battery_voltage).state - 3.6) * 100.0 / (4.6 - 3.6);
+    update_interval: never
+
+
+text_sensor:
+  - platform: template
+    name: "VOC Kvalita"
+    id: air_quality_voc
+    update_interval: never
+
+  - platform: template
+    name: "NOx Kvalita"
+    id: air_quality_nox
+    update_interval: never
+
+  - platform: template
+    name: "CO2 Kvalita"
+    id: air_quality_co2
+    update_interval: never
+
