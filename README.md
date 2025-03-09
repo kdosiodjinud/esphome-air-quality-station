@@ -1,4 +1,4 @@
-# esphome-air-quality-station
+# ESPHome Air Quality Station
 ESPHome-powered portable air quality station with HomeAssistant integration
 
 <p align="center">
