@@ -40,14 +40,14 @@ Czech shop (with easy connection by uSup and battery connection): [https://www.l
 ### Battery
 Czech shop: [https://www.laskakit.cz/geb-li-ion-baterie-1x18650-1s1p-3-7v-3200mah/](https://www.laskakit.cz/geb-li-ion-baterie-1x18650-1s1p-3-7v-3200mah/)
 
-### Cables with onnectors:
+### Cables with onnectors
 Adapter: [https://www.laskakit.cz/laskakit-sup-4x-na-dip-adapter/](https://www.laskakit.cz/laskakit-sup-4x-na-dip-adapter/)
 
 10cm cable: [https://www.laskakit.cz/--sup--stemma-qt--qwiic-jst-sh-4-pin-kabel-10cm/](https://www.laskakit.cz/--sup--stemma-qt--qwiic-jst-sh-4-pin-kabel-10cm/)
 
 Battery reduction: [https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter-pro-baterie--5cm/](https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter-pro-baterie--5cm/)
 
-### 3D printed STL files:
+### 3D printed STL files
 
 <img src="./stl/image-stl.png" style="width: 200px;">
 
@@ -60,7 +60,7 @@ Battery reduction: [https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter
 
 * color in spray: [https://www.hornbach.cz/c/barvy-tapety-a-oblozeni-sten/barvy-laky/barvy/barvy-ve-spreji/specialni-efekty-ve-spreji/S12050/](https://www.hornbach.cz/c/barvy-tapety-a-oblozeni-sten/barvy-laky/barvy/barvy-ve-spreji/specialni-efekty-ve-spreji/S12050/)
 
-### ESPHome config:
+### ESPHome config
 
 [esp-config.yaml](./esp-config.yaml)
 
