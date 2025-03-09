@@ -26,12 +26,14 @@ _* from aliexpress select correct one_
 Czech shop (with easy connection by uSup): [https://www.laskakit.cz/laskakit-sgp41-voc-a-nox-senzor-kvality-ovzdusi/](https://www.laskakit.cz/laskakit-sgp41-voc-a-nox-senzor-kvality-ovzdusi/)
 
 Better price but long delivery: [https://www.aliexpress.com/item/1005006749215421.html](https://www.aliexpress.com/item/1005006749215421.html)
+
 _* from aliexpress select correct one_
 
 ### Pressure, temperature, humidity
 Czech shop (with easy connection by uSup): [https://www.laskakit.cz/arduino-senzor-tlaku--teploty-a-vlhkosti-bme280/](https://www.laskakit.cz/arduino-senzor-tlaku--teploty-a-vlhkosti-bme280/)
 
 Better price but long delivery: [https://www.aliexpress.com/item/1005006995581799.html](https://www.aliexpress.com/item/1005006995581799.html)
+
 _* from aliexpress select correct one_
 
 ### ESP32 + display
