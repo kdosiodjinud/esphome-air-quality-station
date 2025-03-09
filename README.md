@@ -53,5 +53,15 @@ Battery reduction: [https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter
 * header: [download](./stl/co2-header.stl)
 * footer: [download](./stl/co2-footer.stl)
 
+### ESPHome config:
+
+[download](./esp-config.yaml)
+
+## Interesting
+
+* I couldn't use deep sleep because the VOC sensor needs to collect values continuously
+* I used a non-standard I2C - because I needed a perpetual I2C power supply
+* I needed to modify the library for ePaper (you can see the link in the code)  
+
 
 
