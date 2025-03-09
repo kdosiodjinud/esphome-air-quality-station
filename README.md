@@ -43,7 +43,7 @@ Czech shop (with easy connection by uSup and battery connection): [https://www.l
 ### Battery
 Czech shop: [https://www.laskakit.cz/geb-li-ion-baterie-1x18650-1s1p-3-7v-3200mah/](https://www.laskakit.cz/geb-li-ion-baterie-1x18650-1s1p-3-7v-3200mah/)
 
-### Cables with onnectors
+### Cables with connectors
 I2C bridge: [https://www.laskakit.cz/laskakit-sup-4x-na-dip-adapter/](https://www.laskakit.cz/laskakit-sup-4x-na-dip-adapter/)
 
 10cm cable: [https://www.laskakit.cz/--sup--stemma-qt--qwiic-jst-sh-4-pin-kabel-10cm/](https://www.laskakit.cz/--sup--stemma-qt--qwiic-jst-sh-4-pin-kabel-10cm/)
