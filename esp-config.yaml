@@ -29,7 +29,6 @@ ota:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-  id: my_wifi
 
 i2c:
   sda: 32
