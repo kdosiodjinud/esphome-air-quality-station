@@ -33,3 +33,7 @@ Czech shop: [https://www.laskakit.cz/geb-li-ion-baterie-1x18650-1s1p-3-7v-3200ma
 Adapter: [https://www.laskakit.cz/laskakit-sup-4x-na-dip-adapter/](https://www.laskakit.cz/laskakit-sup-4x-na-dip-adapter/)
 10cm cable: [https://www.laskakit.cz/--sup--stemma-qt--qwiic-jst-sh-4-pin-kabel-10cm/](https://www.laskakit.cz/--sup--stemma-qt--qwiic-jst-sh-4-pin-kabel-10cm/)
 Battery reduction: [https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter-pro-baterie--5cm/](https://www.laskakit.cz/jst-ph-2-2mm-do-jst-sh-2-1mm-adapter-pro-baterie--5cm/)
+
+### 3D printed STL files:
+
+![Air Quality Station - STL Files](image-stl.png)
